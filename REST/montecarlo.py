@@ -1,16 +1,16 @@
 import random
 import math
 import sys
+import numpy as np
 
-def f(x, y):
-    return math.fabs(math.exp(-x**2 - y**2) * math.cos(2 * x) * math.sin(2 * y))
+def f(x):
+    return np.fabs(np.sin(x) * np.exp(-0.1 * x**2))
 
 def monte_carlo_integration(samples: int):
     total = 0.0
     for _ in range(samples):
-        x = random.uniform(-2, 2)
-        y = random.uniform(-2, 2)
-        total += f(x, y)
+        x = random.uniform(-5, 5)
+        total += f(x)
     
-    area = (5 * 10)  # bo [-5, 5] × [-5, 5] = 10 × 10 = 100
+    area = (5 * 10)
     return area * total / samples

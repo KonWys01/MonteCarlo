@@ -7,7 +7,7 @@ import time
 app = FastAPI()
 
 WORKER_URL = "http://worker:8000/worker_task"
-REPEAT_COUNT = 3
+REPEAT_COUNT = 5
 
 @app.post("/local")
 async def calculate_local(request: Request):
@@ -32,7 +32,7 @@ async def calculate_swarm(request: Request):
 
     start = time.perf_counter()
 
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(timeout=100) as client:
         tasks = [
             client.post(WORKER_URL, json={"samples": samples})
             for _ in range(REPEAT_COUNT)
