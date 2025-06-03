@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Request
-from montecarlo import monte_carlo_integration
+from montecarlo import monte_carlo
 import httpx
 import asyncio
 import time
@@ -12,10 +12,10 @@ REPEAT_COUNT = 5
 @app.post("/local")
 async def calculate_local(request: Request):
     data = await request.json()
-    samples = int(data.get("samples", 10_000_000))
+    samples = int(data.get("samples", 1_000_000))
 
     start = time.perf_counter()
-    results = [monte_carlo_integration(samples) for _ in range(REPEAT_COUNT)]
+    results = [monte_carlo(samples) for _ in range(REPEAT_COUNT)]
     end = time.perf_counter()
 
     avg_result = sum(results) / REPEAT_COUNT
@@ -28,7 +28,7 @@ async def calculate_local(request: Request):
 @app.post("/swarm")
 async def calculate_swarm(request: Request):
     data = await request.json()
-    samples = int(data.get("samples", 10_000_000))
+    samples = int(data.get("samples", 1_000_000))
 
     start = time.perf_counter()
 
