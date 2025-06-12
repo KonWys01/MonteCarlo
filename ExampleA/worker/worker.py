@@ -13,7 +13,7 @@ def monte_carlo(n=1_000_000):
     for _ in range(n):
         x = random.uniform(-5, 5)
         total += f(x)
-    area = (5*10)
+    area = 10
     return total / n * area
 
 if __name__ == "__main__":
